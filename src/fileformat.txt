@@ -1,0 +1,95 @@
+Twilli Engine .twm File layout
+Last Edited: 2/4/2023
+--------------------------------------------
+Meta Data Header:
+--------------------------------------------
+00-07: Uncompressed file size
+
+Release Version Number: 0
+--------------------------------------------
+Model Layout Header:
+--------------------------------------------
+00-03: ".twm" in characters
+04-07: File Layout Release Version Number (to throw out a warning/error if the model is using out of date layout)
+
+08-11: # of Meshes (uint32_t)
+12:    Byte Boolean determining if model has a skeleton mesh
+13:    RESERVED
+14:    RESERVED
+15:    RESERVED
+
+IF CONTAINS SKELETON MESH:
+--------------------------------------------
+    --------------------------------------------
+    Skeleton Mesh:
+    --------------------------------------------
+    00-03: # of Skeleton Joints (uint32_t)
+    Joints are laid out one after another
+
+    Joint Layout: (Byte Positions are relative to the current joint)
+    00-03: Index of Parent Joint (uint32_t) (0 for root joint)
+    08-72: Inverse global bind pose matrix of joint (16 floats)
+
+--------------------------------------------
+Meshes:
+--------------------------------------------
+Meshes are laid out one after another
+
+Mesh Layout: (Byte Positions are relative to the current mesh)
+00-07: # of Vertices (uint64_t)
+08:    Byte Boolean determining if normals exist.
+09:    Byte Boolean determining if uv's exist.
+10:    Byte Boolean determining if tangents exist.
+11:    Byte Boolean determining if binormals exist.
+12:    Byte Boolean determining if deformer exists.
+13:    RESERVED
+14:    RESERVED
+15:    RESERVED
+
+All vertices  (12 bytes each) (3 floats) (one per vertex)
+All normals   (12 bytes each) (3 floats) (one per vertex)
+All uv's      (8 bytes each)  (2 floats) (one per vertex)
+All tangents  (12 bytes each) (3 floats) (one per vertex)
+All binormals (12 bytes each) (3 floats) (one per vertex)
+
+00-07: Number of Indices (uint64_t)
+All Indices (8 bytes each) (uint64_t) (was originally sizeof(int))
+
+--------------------------------------------
+IF CONTAINS SKELETON MESH:
+--------------------------------------------
+    Clusters are laid out one after another, per mesh
+    Cluster Layout: (Byte Positions are relative to the current cluster) (There is one cluster per vertex)
+    00-07: # of Blending Weights (uint64_t)
+
+      Blending Weights are laid out one after another, per cluster
+      Blending Weight Layout: (Byte positions are relative to the current Blending Weight)
+      00-03: Joint Index (uint32_t)
+      04-11: Weight (double)
+
+--------------------------------------------
+Animation Data:
+--------------------------------------------
+00-03: # of Animations (uint32_t)
+
+IF NUM_ANIMATION > 0
+-----------------------------
+    Animations are laid out one after another
+    Animation Layout: (Byte positions are relative to the current animation)
+
+    For each joint:
+      00-03: # of Keyframes (uint32_t)
+      All Keyframes
+
+      All keyframes are laid out one after another for each joint
+      Keyframe Layout:
+
+      00-03: # of milliseconds since animation started (uint32_t)
+      04-15: Translation (3 floats)
+      16-27: Scale (3 floats)
+      28-44: Rotation (4 floats)
+
+--------------------------------------------
+FOOTER:
+--------------------------------------------
+0-15: ".twm END OF FILE" in characters
