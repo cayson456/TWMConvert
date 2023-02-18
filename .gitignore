@@ -6,3 +6,17 @@
 *.recipe
 *.exe
 *.obj
+*.vcxproj
+*.vcxproj.filters
+*.sln
+*.opendb
+*.db
+*.db-wal
+*.lock
+*.vsidx
+*.suo
+*.ilk
+*.idb
+*.user
+*.ipch
+*.twm

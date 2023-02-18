@@ -1,11 +1,14 @@
 Twilli Engine .twm File layout
-Last Edited: 2/4/2023
---------------------------------------------
-Meta Data Header:
---------------------------------------------
-00-07: Uncompressed file size
 
-Release Version Number: 0
+Release Version Number: 0 (2/4/2023)
+
+Release Version Number: 1 (2/13/2023)
+ - Removed compression, and removed "uncompressed bytes" header
+
+Current:
+Release Version Number: 2 (2/13/2023)
+ - Changed indices to uint32_t
+
 --------------------------------------------
 Model Layout Header:
 --------------------------------------------
@@ -53,7 +56,7 @@ All tangents  (12 bytes each) (3 floats) (one per vertex)
 All binormals (12 bytes each) (3 floats) (one per vertex)
 
 00-07: Number of Indices (uint64_t)
-All Indices (8 bytes each) (uint64_t) (was originally sizeof(int))
+All Indices (4 bytes each) uint32_t 
 
 --------------------------------------------
 IF CONTAINS SKELETON MESH:

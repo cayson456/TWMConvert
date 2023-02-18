@@ -5,7 +5,7 @@
 #include "OBJLoader/OBJLoader.hpp"
 
 
-const uint32_t FILE_LAYOUT_VERSION = 0;
+const uint32_t FILE_LAYOUT_VERSION = 2;
 
 int main(int argc, char* argv[])
 {
@@ -93,7 +93,7 @@ int main(int argc, char* argv[])
         writer.Write(static_cast<uint64_t>(mesh.mIndices.size()), sizeof(uint64_t));
 
         // All Indices
-        writer.Write(mesh.mIndices[0], sizeof(float) * mesh.mIndices.size());
+        writer.Write(mesh.mIndices[0], sizeof(uint32_t) * mesh.mIndices.size());
     }
 
 

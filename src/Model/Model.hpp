@@ -11,7 +11,7 @@ public:
     uint64_t mNumIndices;
 
     std::vector<Vector3> mPositions;
-    std::vector<uint64_t> mIndices;
+    std::vector<uint32_t> mIndices;
     std::vector<Vector3> mNormals;
     std::vector<Vector2> mUVs;
     std::vector<Vector3> mTangents;
