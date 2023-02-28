@@ -31,7 +31,7 @@ newaction {
 
 workspace "TWMConvert"
   configurations { "Debug", "Release" } -- Optimization/General config mode in VS
-  platforms { "x86", "x64" }
+  platforms { "x64" }
 
   local project_action = "UNDEFINED"
   if _ACTION ~= nill then
@@ -58,9 +58,9 @@ workspace "TWMConvert"
     optimize "On"
   filter{}
 
-  filter { "platforms:x86" }
-    architecture "x86"
-  filter {}
+--  filter { "platforms:x86" }
+--    architecture "x86"
+--  filter {}
   filter { "platforms:x64" }
     architecture "x64"
   filter {}
@@ -78,7 +78,7 @@ workspace "TWMConvert"
   project "TWMConvert"
     kind "ConsoleApp" -- "WindowedApp" removes console
     language "C++"
-    targetdir "bin_%{cfg.platform}_%{cfg.buildcfg}" -- Where the output binary goes. This will be generated when we build from the makefile/visual studio project/etc.
+    targetdir "bin_%{cfg.buildcfg}" -- Where the output binary goes. This will be generated when we build from the makefile/visual studio project/etc.
     targetname "TWMConvert"							-- the name of the executable saved to 'targetdir'
     cppdialect "C++20"
 
@@ -128,39 +128,22 @@ workspace "TWMConvert"
     includedirs { SourceDir, "./dep/inc" }
     libdirs { "./dep/lib" }
 
-    links {
-        "/LZ4/%{cfg.platform}_%{cfg.buildcfg}/liblz4_static"
-    }
+    links {}
 
     prebuildcommands {}
-    postbuildcommands {
-      "",
-    }
-
-    filter "platforms:x86"
-      links {}
-
-      filter "configurations:Debug"
-        postbuildcommands {"" }
-      filter {}
-
-      filter "configurations:Release"
-        postbuildcommands {"" }
-      filter {}
-
-      postbuildcommands {}
-
-    filter {}
+    postbuildcommands {}
 
     filter "platforms:x64"
       links {}
 
       filter "configurations:Debug"
-        postbuildcommands {"" }
+        links {"/Assimp/%{cfg.buildcfg}/assimp-vc143-mtd"}
+        postbuildcommands {"copy ..\\dep\\lib\\Assimp\\Debug\\assimp-vc143-mtd.dll ..\\bin_%{cfg.buildcfg}\\"}
       filter {}
 
       filter "configurations:Release"
-        postbuildcommands {"" }
+        links {"/Assimp/%{cfg.buildcfg}/assimp-vc143-mt"}
+        postbuildcommands {"copy ..\\dep\\lib\\Assimp\\Release\\assimp-vc143-mt.dll ..\\bin_%{cfg.buildcfg}\\"}
       filter {}
 
       postbuildcommands {}

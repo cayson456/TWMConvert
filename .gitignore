@@ -20,3 +20,5 @@
 *.user
 *.ipch
 *.twm
+bin*
+project_*

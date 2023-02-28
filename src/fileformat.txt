@@ -5,9 +5,12 @@ Release Version Number: 0 (2/4/2023)
 Release Version Number: 1 (2/13/2023)
  - Removed compression, and removed "uncompressed bytes" header
 
-Current:
 Release Version Number: 2 (2/13/2023)
  - Changed indices to uint32_t
+
+Current:
+Release Version Number: 3 (2/23/2023)
+ - Changed num_indices and num_verts to uint32_t
 
 --------------------------------------------
 Model Layout Header:
@@ -39,15 +42,15 @@ Meshes:
 Meshes are laid out one after another
 
 Mesh Layout: (Byte Positions are relative to the current mesh)
-00-07: # of Vertices (uint64_t)
-08:    Byte Boolean determining if normals exist.
-09:    Byte Boolean determining if uv's exist.
-10:    Byte Boolean determining if tangents exist.
-11:    Byte Boolean determining if binormals exist.
-12:    Byte Boolean determining if deformer exists.
-13:    RESERVED
-14:    RESERVED
-15:    RESERVED
+00-03: # of Vertices (uint32_t)
+04:    Byte Boolean determining if normals exist.
+05:    Byte Boolean determining if uv's exist.
+06:    Byte Boolean determining if tangents exist.
+07:    Byte Boolean determining if binormals exist.
+08:    Byte Boolean determining if deformer exists.
+09:    RESERVED
+10:    RESERVED
+11:    RESERVED
 
 All vertices  (12 bytes each) (3 floats) (one per vertex)
 All normals   (12 bytes each) (3 floats) (one per vertex)
@@ -55,8 +58,8 @@ All uv's      (8 bytes each)  (2 floats) (one per vertex)
 All tangents  (12 bytes each) (3 floats) (one per vertex)
 All binormals (12 bytes each) (3 floats) (one per vertex)
 
-00-07: Number of Indices (uint64_t)
-All Indices (4 bytes each) uint32_t 
+00-03: Number of Indices (uint32_t)
+All Indices (4 bytes each) uint32_t
 
 --------------------------------------------
 IF CONTAINS SKELETON MESH:

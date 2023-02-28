@@ -1,6 +1,5 @@
 #include "precompiled.hpp"
 #include "FileWriter.hpp"
-#include "LZ4/lz4.h"
 
 // Check endianness of processor
 union {

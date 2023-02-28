@@ -19,8 +19,3 @@
 #include <source_location>
 #include <regex>
 #include <filesystem>
-
-#include "DirectXTK/SimpleMath.h"
-
-// shhhh
-using namespace DirectX::SimpleMath;
